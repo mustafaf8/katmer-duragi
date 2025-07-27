@@ -1,0 +1,63 @@
+const menuData = [
+  {
+    id: 1,
+    name: "Çikolatalı Katmer",
+    description: "Zengin çikolata dolgulu geleneksel katmer",
+    price: 45.99,
+    image: "src/assets/screen6.jpg",
+    category: "Tatlı",
+    popular: true,
+  },
+  {
+    id: 2,
+    name: "Klasik Katmer",
+    description: "Antep fıstıklı otantik ince tabakalı hamur tatlısı",
+    price: 39.99,
+    image: "src/assets/screen6.jpg",
+    category: "Tatlı",
+  },
+  {
+    id: 3,
+    name: "Fıstıklı Katmer",
+    description: "Premium Antep fıstığı ile doldurulmuş nefis katmer",
+    price: 49.99,
+    image: "src/assets/screen6.jpg",
+    category: "Tatlı",
+    popular: true,
+  },
+  {
+    id: 4,
+    name: "Cevizli Katmer",
+    description: "Çıtır ceviz dolgulu tatlı katmer",
+    price: 42.99,
+    image: "src/assets/screen6.jpg",
+    category: "Tatlı",
+  },
+  {
+    id: 5,
+    name: "Türk Kahvesi",
+    description: "Geleneksel yöntemlerle hazırlanan Türk kahvesi",
+    price: 15.99,
+    image: "src/assets/screen7.jpg",
+    category: "İçecek",
+  },
+  {
+    id: 6,
+    name: "Çay",
+    description: "Demli Türk çayı",
+    price: 8.99,
+    image: "src/assets/screen7.jpg",
+    category: "İçecek",
+  },
+  {
+    id: 7,
+    name: "Limonata",
+    description: "Ev yapımı taze limonata",
+    price: 12.99,
+    image: "src/assets/screen7.jpg",
+    category: "İçecek",
+    popular: true,
+  },
+];
+
+export default menuData;
