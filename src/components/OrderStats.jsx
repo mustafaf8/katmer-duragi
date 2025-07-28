@@ -28,10 +28,13 @@ function OrderStats({ orders }) {
   // En popüler ürünleri bul
   const itemPopularity = {};
   orders.forEach((order) => {
-    order.items.forEach((item) => {
-      itemPopularity[item.name] =
-        (itemPopularity[item.name] || 0) + item.quantity;
-    });
+    // order.items'ın bir dizi olduğundan emin ol
+    if (Array.isArray(order.items)) {
+      order.items.forEach((item) => {
+        itemPopularity[item.name] =
+          (itemPopularity[item.name] || 0) + item.quantity;
+      });
+    }
   });
 
   // Ürünleri popülerliğe göre sırala
@@ -39,13 +42,18 @@ function OrderStats({ orders }) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5); // En popüler 5 ürün
 
-  // Bugünün tarihini al
+  // Bugünün başlangıç saatini al
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Bugünkü siparişleri filtrele
+  // Bugünkü siparişleri filtrele (Firestore timestamp'ini doğru kullanarak)
   const todayOrders = orders.filter((order) => {
-    const orderDate = new Date(order.timestamp);
+    // timestamp ve toDate metodunun varlığını kontrol et
+    if (!order.timestamp || typeof order.timestamp.toDate !== "function") {
+      return false;
+    }
+    // Firestore timestamp'ini JavaScript Date objesine çevir
+    const orderDate = order.timestamp.toDate();
     return orderDate >= today;
   });
 
