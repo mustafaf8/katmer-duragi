@@ -1,44 +1,45 @@
-import React, { useState } from "react";
-import menuData from "../menuData";
-import { useCart } from "../hooks.js";
+import React, { useState, useEffect } from "react";
+import { useCart } from "../hooks.js"; // hook dosyasından al
 import Cart from "./Cart";
+import { db } from "../firebaseConfig";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
 function Menu({ onBack }) {
   const { addToCart, tableNumber, getCartItemCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [menuData, setMenuData] = useState([]); // Veriyi state olarak tut
+  const [loading, setLoading] = useState(true); // Yüklenme durumu için
 
-  // Body arka plan rengini geçersiz kılmak için useEffect ekleyelim
-  React.useEffect(() => {
-    // Önceki body stilini saklayalım
-    const originalBodyStyle = document.body.style.backgroundColor;
-
-    // Body arka plan rengini geçici olarak şeffaf yapalım
+  // Arka plan rengini yönet
+  useEffect(() => {
     document.body.style.backgroundColor = "transparent";
-
-    // Component kaldırıldığında orijinal stili geri yükleyelim
     return () => {
-      document.body.style.backgroundColor = originalBodyStyle;
+      document.body.style.backgroundColor = ""; // Orijinal stili geri yükle
     };
   }, []);
 
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
+  // Firestore'dan menü verilerini çek
+  useEffect(() => {
+    setLoading(true);
+    const q = query(collection(db, "menuItems"), orderBy("name"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setMenuData(items);
+      setLoading(false);
+    });
 
-  const handleAddToCart = (item) => {
-    addToCart(item);
-  };
+    return () => unsubscribe(); // Dinleyiciyi temizle
+  }, []);
 
+  const toggleCart = () => setIsCartOpen(!isCartOpen);
+  const handleAddToCart = (item) => addToCart(item);
   const cartItemCount = getCartItemCount();
 
-  // Tüm kategorileri al
   const categories = [
     "all",
     ...new Set(menuData.map((item) => item.category || "all")),
   ];
-
-  // Aktif kategoriye göre filtrelenmiş menü öğeleri
   const filteredItems =
     activeCategory === "all"
       ? menuData
@@ -46,7 +47,6 @@ function Menu({ onBack }) {
 
   return (
     <div className="menu-container">
-      {/* Hero Bölümü */}
       <div className="menu-hero">
         <div className="menu-hero-content">
           <h1>Katmer Durağı</h1>
@@ -59,7 +59,6 @@ function Menu({ onBack }) {
         </div>
       </div>
 
-      {/* Header Bölümü */}
       <div className="menu-header">
         <h2>Lezzetli Menümüz</h2>
         <div className="menu-actions">
@@ -76,7 +75,6 @@ function Menu({ onBack }) {
         </div>
       </div>
 
-      {/* Kategori Filtreleme */}
       <div className="menu-categories">
         {categories.map((category) => (
           <button
@@ -91,35 +89,34 @@ function Menu({ onBack }) {
         ))}
       </div>
 
-      {/* Menü Öğeleri */}
       <div className="menu-items">
-        {filteredItems.map((item) => (
-          <div key={item.id} className="menu-item">
-            <div className="menu-item-image">
-              <img src={item.image} alt={item.name} />
-              {item.popular && <span className="popular-tag">Popüler</span>}
-            </div>
-            <div className="menu-item-info">
-              <h3>{item.name}</h3>
-              <p className="description">{item.description}</p>
-              <div className="menu-item-footer">
-                <p className="price">{item.price.toFixed(2)} ₺</p>
-                <button
-                  className="add-to-cart-btn"
-                  onClick={() => handleAddToCart(item)}
-                >
-                  <span className="add-icon">+</span> Sepete Ekle
-                </button>
+        {loading ? (
+          <p>Menü yükleniyor...</p>
+        ) : (
+          filteredItems.map((item) => (
+            <div key={item.id} className="menu-item">
+              <div className="menu-item-image">
+                <img src={item.image} alt={item.name} />
+                {item.popular && <span className="popular-tag">Popüler</span>}
+              </div>
+              <div className="menu-item-info">
+                <h3>{item.name}</h3>
+                <p className="description">{item.description}</p>
+                <div className="menu-item-footer">
+                  <p className="price">
+                    {item.price ? item.price.toFixed(2) : "0.00"} ₺
+                  </p>
+                  <button
+                    className="add-to-cart-btn"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    <span className="add-icon">+</span> Sepete Ekle
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Footer Bölümü */}
-      <div className="menu-footer">
-        <p>Sipariş veya sorularınız için personelimize danışabilirsiniz.</p>
-        <p>© {new Date().getFullYear()} Katmer Durağı - Tüm Hakları Saklıdır</p>
+          ))
+        )}
       </div>
 
       {isCartOpen && <Cart onClose={toggleCart} />}
