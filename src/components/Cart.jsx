@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCart } from "../CartContext.jsx";
+import { useCart } from "../hooks.js";
 
 function Cart({ onClose }) {
   const {

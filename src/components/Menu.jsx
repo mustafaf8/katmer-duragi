@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import menuData from "../menuData";
-import { useCart } from "../CartContext.jsx";
+import { useCart } from "../hooks.js";
 import Cart from "./Cart";
 
 function Menu({ onBack }) {

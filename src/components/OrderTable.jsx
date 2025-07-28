@@ -2,20 +2,21 @@ import React, { useState } from "react";
 
 function OrderTable({ orders, updateOrderStatus }) {
   const [expandedOrderId, setExpandedOrderId] = useState(null);
-  const [filter, setFilter] = useState("all"); // 'all', 'pending', 'completed'
+  const [filter, setFilter] = useState("all");
 
-  // Siparişleri filtreleme
   const filteredOrders = orders.filter((order) => {
     if (filter === "all") return true;
     return order.status === filter;
   });
 
-  // Siparişleri en yeniden en eskiye doğru sıralama
+  // Siparişleri sıralarken timestamp'in varlığını kontrol et
   const sortedOrders = [...filteredOrders].sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
+    // Firestore'dan gelen timestamp objesinin .toDate() metodunu kullan
+    const dateA = a.timestamp ? a.timestamp.toDate() : new Date(0);
+    const dateB = b.timestamp ? b.timestamp.toDate() : new Date(0);
+    return dateB - dateA;
   });
 
-  // Sipariş detaylarını aç/kapa
   const toggleOrderDetails = (orderId) => {
     if (expandedOrderId === orderId) {
       setExpandedOrderId(null);
@@ -24,9 +25,14 @@ function OrderTable({ orders, updateOrderStatus }) {
     }
   };
 
-  // Tarih formatını düzenleme
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
+  // Tarih formatını düzenleyen fonksiyonu güncelle
+  const formatDate = (timestamp) => {
+    // Eğer timestamp ve toDate metodu yoksa, geçersiz tarih göstermesini engelle
+    if (!timestamp || typeof timestamp.toDate !== "function") {
+      return "Tarih bekleniyor...";
+    }
+    // Firestore timestamp objesini JavaScript Date objesine çevir
+    const date = timestamp.toDate();
     return date.toLocaleString("tr-TR", {
       day: "2-digit",
       month: "2-digit",
@@ -76,7 +82,7 @@ function OrderTable({ orders, updateOrderStatus }) {
                 onClick={() => toggleOrderDetails(order.id)}
               >
                 <div className="order-summary">
-                  <span className="order-id">Sipariş #{order.id}</span>
+                  {/* Sipariş ID'sini gösteren satırı sildik */}
                   <span className="order-table">Masa {order.tableNumber}</span>
                   <span className="order-date">
                     {formatDate(order.timestamp)}
@@ -98,7 +104,6 @@ function OrderTable({ orders, updateOrderStatus }) {
               {expandedOrderId === order.id && (
                 <div className="order-details">
                   <h3>Sipariş Detayları</h3>
-
                   <table className="items-table">
                     <thead>
                       <tr>
@@ -127,7 +132,6 @@ function OrderTable({ orders, updateOrderStatus }) {
                       </tr>
                     </tbody>
                   </table>
-
                   <div className="order-status-actions">
                     {order.status === "pending" ? (
                       <button

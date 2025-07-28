@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import OrderTable from "./OrderTable";
 import OrderStats from "./OrderStats";
-import db from "../firebase";
+// Firebase ve Firestore için gerekli fonksiyonları içe aktarın
+import { db } from "../firebaseConfig";
 import {
   collection,
   query,
@@ -16,26 +17,38 @@ function AdminDashboard({ onLogout }) {
   const [orders, setOrders] = useState([]);
   const adminUsername = localStorage.getItem("adminUsername") || "Admin";
 
+  // useEffect ile component yüklendiğinde Firestore'dan verileri çek
   useEffect(() => {
-    // Firestore'dan gerçek zamanlı sipariş dinle
+    // 'orders' koleksiyonuna erişim için bir sorgu oluşturun
+    // Siparişleri 'timestamp' alanına göre azalan sırada (en yeni en üstte) sırala
     const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
+
+    // onSnapshot ile koleksiyondaki değişiklikleri gerçek zamanlı olarak dinle
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetched = snapshot.docs.map((docSnap) => ({
-        id: docSnap.id,
-        ...docSnap.data(),
+      // Gelen veriyi (snapshot) alıp 'orders' state'ine uygun formata dönüştür
+      const fetchedOrders = snapshot.docs.map((docSnap) => ({
+        id: docSnap.id, // Belge ID'sini al (örn: 'aBCdEfgHiJkLmnOp')
+        ...docSnap.data(), // Belgedeki diğer tüm verileri al (items, total, status vb.)
       }));
-      setOrders(fetched);
+
+      // Siparişleri state'e kaydet
+      setOrders(fetchedOrders);
     });
 
+    // Component DOM'dan kaldırıldığında dinleyiciyi sonlandır (bellek sızıntısını önler)
     return () => unsubscribe();
-  }, []);
+  }, []); // Bu effect'in sadece component ilk yüklendiğinde bir kez çalışmasını sağlar
 
-  // Siparişin durumunu güncelle
+  // Siparişin durumunu (bekliyor/tamamlandı) güncelleyen fonksiyon
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await updateDoc(doc(db, "orders", orderId), { status: newStatus });
+      // Güncellenecek siparişin referansını al
+      const orderRef = doc(db, "orders", orderId);
+      // Firestore'daki 'status' alanını yeni değerle güncelle
+      await updateDoc(orderRef, { status: newStatus });
     } catch (err) {
       console.error("Sipariş durumu güncellenirken hata:", err);
+      // Burada kullanıcıya bir hata mesajı da gösterebilirsiniz.
     }
   };
 
@@ -68,10 +81,14 @@ function AdminDashboard({ onLogout }) {
 
       <div className="admin-content">
         {activeTab === "orders" && (
+          // Gerçek zamanlı 'orders' verisini ve güncelleme fonksiyonunu OrderTable'a prop olarak geç
           <OrderTable orders={orders} updateOrderStatus={updateOrderStatus} />
         )}
 
-        {activeTab === "stats" && <OrderStats orders={orders} />}
+        {activeTab === "stats" && (
+          // Gerçek zamanlı 'orders' verisini OrderStats'a prop olarak geç
+          <OrderStats orders={orders} />
+        )}
       </div>
     </div>
   );

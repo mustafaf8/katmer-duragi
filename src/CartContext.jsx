@@ -1,9 +1,8 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Toast from "./components/Toast";
-import db from "./firebase";
+import { db } from "./firebaseConfig";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-
-const CartContext = createContext();
+import { CartContext } from "./hooks";
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
@@ -157,14 +156,3 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
-
-// Kolay erişim için bir hook oluştur
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
-};
-
-export default CartContext;
