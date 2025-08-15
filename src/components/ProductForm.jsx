@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { db, storage } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { doc, addDoc, updateDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// Basit bir "X" ikonu
 const CloseIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +19,8 @@ const CloseIcon = () => (
   </svg>
 );
 
-function ProductForm({ productToEdit, onClose }) {
+// existingCategories prop'unu ekledik
+function ProductForm({ productToEdit, existingCategories, onClose }) {
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -30,22 +29,30 @@ function ProductForm({ productToEdit, onClose }) {
     image: "",
     popular: false,
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+
+  // Yeni kategori girişi için state
+  const [newCategory, setNewCategory] = useState("");
+  const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
+
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (productToEdit) {
       setProduct(productToEdit);
-      if (productToEdit.image) {
-        setImagePreview(productToEdit.image);
+      // Eğer düzenlenen ürünün kategorisi mevcut listede yoksa, "yeni kategori" seçeneğini aktif et
+      if (
+        productToEdit.category &&
+        !existingCategories.includes(productToEdit.category)
+      ) {
+        setShowNewCategoryInput(true);
+        setNewCategory(productToEdit.category);
       }
     }
-  }, [productToEdit]);
+  }, [productToEdit, existingCategories]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    // Fiyat alanının negatif olmamasını sağla
     const val = name === "price" ? Math.max(0, Number(value)) : value;
     setProduct((prev) => ({
       ...prev,
@@ -53,37 +60,61 @@ function ProductForm({ productToEdit, onClose }) {
     }));
   };
 
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      const file = e.target.files[0];
-      setImageFile(file);
-      // Resim önizlemesi için
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+  const handleCategoryChange = (e) => {
+    const { value } = e.target;
+    if (value === "addNew") {
+      setShowNewCategoryInput(true);
+      setProduct((prev) => ({ ...prev, category: "" }));
+    } else {
+      setShowNewCategoryInput(false);
+      setNewCategory("");
+      setProduct((prev) => ({ ...prev, category: value }));
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 700 * 1024) {
+      setErrorMessage(
+        "Resim boyutu çok büyük! Lütfen 700KB'den küçük bir resim seçin."
+      );
+      return;
+    }
+    setErrorMessage("");
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setProduct((prev) => ({ ...prev, image: reader.result }));
+    };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsUploading(true);
-    let imageUrl = product.image;
+    setIsProcessing(true);
 
-    if (imageFile) {
-      const imageRef = ref(
-        storage,
-        `menuItems/${Date.now()}_${imageFile.name}`
+    // Kategori seçimi kontrolü
+    const finalCategory = showNewCategoryInput
+      ? newCategory.trim()
+      : product.category;
+    if (!finalCategory) {
+      setErrorMessage(
+        "Lütfen bir kategori seçin veya yeni bir kategori girin."
       );
-      await uploadBytes(imageRef, imageFile);
-      imageUrl = await getDownloadURL(imageRef);
+      setIsProcessing(false);
+      return;
+    }
+
+    if (!product.image) {
+      setErrorMessage("Lütfen bir ürün resmi seçin.");
+      setIsProcessing(false);
+      return;
     }
 
     const productData = {
       ...product,
       price: Number(product.price),
-      image: imageUrl,
+      category: finalCategory,
     };
 
     try {
@@ -96,8 +127,9 @@ function ProductForm({ productToEdit, onClose }) {
       onClose();
     } catch (error) {
       console.error("İşlem sırasında hata:", error);
+      setErrorMessage("Veritabanı hatası: " + error.message);
     } finally {
-      setIsUploading(false);
+      setIsProcessing(false);
     }
   };
 
@@ -107,10 +139,13 @@ function ProductForm({ productToEdit, onClose }) {
         <button onClick={onClose} className="close-form-btn">
           <CloseIcon />
         </button>
-
         <h3>{productToEdit ? "Ürünü Düzenle" : "Yeni Ürün Ekle"}</h3>
 
         <form onSubmit={handleSubmit} className="product-form">
+          {errorMessage && (
+            <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
+          )}
+
           <div className="form-group">
             <label htmlFor="name">Ürün Adı</label>
             <input
@@ -149,22 +184,52 @@ function ProductForm({ productToEdit, onClose }) {
                 required
               />
             </div>
+
+            {/* Kategori Dropdown */}
             <div className="form-group">
               <label htmlFor="category">Kategori</label>
-              <input
+              <select
                 id="category"
-                type="text"
                 name="category"
-                value={product.category}
-                onChange={handleChange}
-                placeholder="Örn: Tatlı"
+                value={showNewCategoryInput ? "addNew" : product.category}
+                onChange={handleCategoryChange}
                 required
-              />
+              >
+                <option value="" disabled>
+                  Kategori Seçin
+                </option>
+                {existingCategories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+                <option
+                  value="addNew"
+                  style={{ fontStyle: "italic", color: "#dd1173" }}
+                >
+                  + Yeni Kategori Ekle
+                </option>
+              </select>
             </div>
           </div>
 
+          {/* Yeni Kategori Giriş Alanı */}
+          {showNewCategoryInput && (
+            <div className="form-group">
+              <label htmlFor="newCategory">Yeni Kategori Adı</label>
+              <input
+                id="newCategory"
+                type="text"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                placeholder="Yeni kategoriyi yazın"
+                required
+              />
+            </div>
+          )}
+
           <div className="form-group file-input-group">
-            <label htmlFor="image">Ürün Resmi</label>
+            <label htmlFor="image">Ürün Resmi (Max: 700KB)</label>
             <div className="file-input-wrapper">
               <input
                 id="image"
@@ -174,11 +239,11 @@ function ProductForm({ productToEdit, onClose }) {
                 className="file-input-hidden"
               />
               <label htmlFor="image" className="file-input-label">
-                {imageFile ? imageFile.name : "Resim Seç veya Değiştir"}
+                Resim Seç veya Değiştir
               </label>
-              {imagePreview && (
+              {product.image && (
                 <img
-                  src={imagePreview}
+                  src={product.image}
                   alt="Önizleme"
                   className="image-preview"
                 />
@@ -201,8 +266,12 @@ function ProductForm({ productToEdit, onClose }) {
             <button type="button" onClick={onClose} className="btn-cancel">
               İptal
             </button>
-            <button type="submit" className="btn-submit" disabled={isUploading}>
-              {isUploading ? (
+            <button
+              type="submit"
+              className="btn-submit"
+              disabled={isProcessing}
+            >
+              {isProcessing ? (
                 <>
                   <div className="spinner"></div>
                   <span>Kaydediliyor...</span>

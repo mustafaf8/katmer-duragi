@@ -55,15 +55,10 @@ function App() {
     setIsAdminLoggedIn(false);
   };
 
-  // Animasyonları yeniden tetiklemek için useEffect hook'unu güncelliyoruz
   useEffect(() => {
-    // Menü sayfasından ana sayfaya dönüldüğünde animasyonları sıfırla
-    if (!isMenuPageVisible) {
-      // Önce tüm görünür sınıflarını kaldır
-      const visibleElements = document.querySelectorAll(".visible");
-      visibleElements.forEach((el) => el.classList.remove("visible"));
-
-      // Kısa bir gecikme ile observer'ı yeniden başlat
+    // Ana sayfa bileşenleri görünür olduğunda (ne menüde ne de admin panelinde)
+    if (!isMenuPageVisible && !isAdminLoggedIn && !isAdminLoginOpen) {
+      // Animasyonları yeniden başlatmak için kısa bir gecikme
       const timer = setTimeout(() => {
         const observer = new IntersectionObserver(
           (entries) => {
@@ -84,12 +79,13 @@ function App() {
           hiddenElements.forEach((el) => observer.unobserve(el));
           observer.disconnect();
         };
-      }, 100); // 100ms gecikme ile yeniden başlat
+      }, 100); // 100ms gecikme
 
       // Timer'ı temizle
       return () => clearTimeout(timer);
     }
-  }, [isMenuPageVisible]); // isMenuPageVisible değiştiğinde effect'i yeniden çalıştır
+    // Bağımlılık dizisine isAdminLoggedIn ve isAdminLoginOpen eklendi
+  }, [isMenuPageVisible, isAdminLoggedIn, isAdminLoginOpen]);
 
   // CartProvider ile tüm uygulamayı sarmala
   return (

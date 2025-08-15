@@ -1,5 +1,3 @@
-import React, { useEffect, useRef } from "react";
-
 // Resimleri import ediyoruz
 import screen5 from "../assets/screen5.png";
 import screen8 from "../assets/screen8.png";
@@ -21,13 +19,23 @@ function Features() {
             </p>
           </div>
           <div className="right">
-            <img className="image" src={screen5} alt="Tarif detayları" />
+            <img
+              className="image"
+              src={screen5}
+              alt="Tarif detayları"
+              loading="lazy"
+            />
           </div>
         </div>
 
         <div className="first">
           <div className="right">
-            <img className="image" src={screen8} alt="Satış grafiği" />
+            <img
+              className="image"
+              src={screen8}
+              alt="Satış grafiği"
+              loading="lazy"
+            />
           </div>
           <div className="left">
             <h2 className="hidden">Özel Siparişler ve Etkinlikler</h2>
@@ -49,7 +57,12 @@ function Features() {
             </p>
           </div>
           <div className="right">
-            <img className="image" src={screen9} alt="Malzemeler" />
+            <img
+              className="image"
+              src={screen9}
+              alt="Malzemeler"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -79,7 +92,12 @@ function Features() {
 
         <div className="first">
           <div className="right">
-            <img className="image" src={screen6} alt="Fresh bread" />
+            <img
+              className="image"
+              src={screen6}
+              alt="Fresh bread"
+              loading="lazy"
+            />
           </div>
           <div className="left">
             <h2 className="hidden">Cay sociis nato que penatibus et</h2>
@@ -99,7 +117,12 @@ function Features() {
             </p>
           </div>
           <div className="right">
-            <img className="image" src={screen7} alt="Salad and burger" />
+            <img
+              className="image"
+              src={screen7}
+              alt="Salad and burger"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
