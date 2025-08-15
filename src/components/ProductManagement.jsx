@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
 import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
-import ProductForm from "./ProductForm"; // Birazdan oluşturacağımız bileşen
+import ProductForm from "./ProductForm";
 
 function ProductManagement() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]); // Kategorileri tutmak için state
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
 
@@ -12,6 +13,10 @@ function ProductManagement() {
     const unsubscribe = onSnapshot(collection(db, "menuItems"), (snapshot) => {
       const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setProducts(items);
+
+      // Ürünlerden benzersiz kategori listesi oluştur
+      const uniqueCategories = [...new Set(items.map((item) => item.category))];
+      setCategories(uniqueCategories);
     });
     return () => unsubscribe();
   }, []);
@@ -30,7 +35,6 @@ function ProductManagement() {
     if (window.confirm("Bu ürünü silmek istediğinizden emin misiniz?")) {
       try {
         await deleteDoc(doc(db, "menuItems", id));
-        // Not: Resmin Storage'dan silinmesi de eklenebilir.
       } catch (error) {
         console.error("Ürün silinirken hata:", error);
       }
@@ -47,6 +51,8 @@ function ProductManagement() {
       {isFormVisible && (
         <ProductForm
           productToEdit={productToEdit}
+          // Kategorileri forma prop olarak gönder
+          existingCategories={categories}
           onClose={() => setIsFormVisible(false)}
         />
       )}
@@ -54,10 +60,10 @@ function ProductManagement() {
       <div className="product-list">
         {products.map((product) => (
           <div key={product.id} className="product-list-item">
-            <img src={product.image} alt={product.name} width="100" />
+            <img src={product.image} alt={product.name} />
             <div className="product-details">
               <h4>{product.name}</h4>
-              <p>{product.price.toFixed(2)} ₺</p>
+              <p>{product.price ? product.price.toFixed(2) : "0.00"} ₺</p>
             </div>
             <div className="product-actions">
               <button onClick={() => handleEdit(product)}>Düzenle</button>

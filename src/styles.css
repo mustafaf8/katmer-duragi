@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -9,23 +8,18 @@ html {
   font-family: "Nunito Sans", sans-serif;
 }
 body {
-  background-color: hsla(
-    331.30434782608694,
-    41.29%,
-    24.47%,
-    1
-  ); /* Arka plan rengini düzelttik */
+  background-color: #fefefe;
   width: 100%;
-  min-height: 100vh; /* min-height ekledik */
+  min-height: 100vh;
 }
 .home {
   width: 100%;
   height: 100vh;
   background-image: linear-gradient(
     145deg,
-    #dd1173,
-    hsla(220, 50%, 21.33%, 1) 57%,
-    #350e47
+    #5dae6f,
+    #2c5f3a 57%,
+    #1a3d26
   );
   position: relative;
   overflow-x: hidden;
@@ -42,8 +36,8 @@ header {
   z-index: 999;
 }
 .logo {
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   border-radius: 10px;
   margin-left: 10%;
 }
@@ -143,8 +137,15 @@ header {
   width: 250px;
   height: 60px;
   font-family: "Comfortaa", cursive;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   cursor: pointer;
+  box-shadow: 0 6px 10px rgba(93, 174, 111, 0.3);
+  transition: all 0.3s ease;
+}
+
+.intro-left-btn:hover {
+  background: linear-gradient(135deg, #347746, #225835);
+  box-shadow: 0 20px 30px rgba(93, 174, 111, 0.5), 0 0 20px rgba(93, 174, 111, 0.3);
 }
 .intro-left-btn a {
   color: white;
@@ -159,7 +160,7 @@ header {
   justify-content: flex-start;
   align-items: center;
   height: auto;
-  background-color: #1b1b1b;
+  background-color: #fefefe;
   padding-bottom: 0;
 }
 .about-view {
@@ -171,7 +172,7 @@ header {
   width: 100%;
 }
 .about-top {
-  color: antiquewhite;
+  color: #2c5f3a;
   padding: 35px 20% 30px 20%;
   display: flex;
   flex-direction: column;
@@ -190,7 +191,7 @@ header {
   font-family: "Comfortaa", cursive;
 }
 .about-bottom {
-  background-color: #1b1b1b;
+  background-color: #fefefe;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -205,7 +206,7 @@ header {
 .features {
   width: 100%;
   height: auto;
-  background-color: white;
+  background: linear-gradient(135deg, #fefefe, #f5f7fa);
 }
 .features {
   width: 100%;
@@ -214,7 +215,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background: linear-gradient(135deg, #fefefe, #f5f7fa);
 }
 .first {
   width: 80vw;
@@ -223,25 +224,29 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background: linear-gradient(135deg, #fefefe, #f8f9fa);
 }
 .left {
   width: 70%;
   height: auto;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background: linear-gradient(135deg, #fefefe, #f8f9fa);
 }
 .left h2 {
   padding: 20px 20px 10px 20px;
   font-size: 50px;
   font-family: "Comfortaa", cursive;
+  color: #2c5f3a;
+  text-shadow: 0 2px 4px rgba(93, 174, 111, 0.1);
 }
 .left p {
   padding: 20px 20px 10px 20px;
   font-size: 25px;
   line-height: 1.5;
   font-family: "Nunito Sans", sans-serif;
+  color: #5dae6f;
+  font-weight: 500;
 }
 .right {
   width: 70%;
@@ -249,7 +254,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background: linear-gradient(135deg, #fefefe, #f8f9fa);
 }
 .features-content {
   display: flex;
@@ -261,11 +266,30 @@ header {
 .features-content P {
   font-size: x-large;
   font-family: "Nunito Sans", sans-serif;
+  color: #5dae6f;
+  font-weight: 500;
 }
 .features-content img,
 h2,
 p {
   padding: 10px;
+}
+
+.features-content h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c5f3a;
+  margin-bottom: 10px;
+  font-family: "Comfortaa", cursive;
+  text-shadow: 0 2px 4px rgba(93, 174, 111, 0.1);
+}
+
+.features-content p {
+  font-size: 18px;
+  color: #5dae6f;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
 .numbers {
   width: 80vw;
@@ -274,7 +298,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background: linear-gradient(135deg, #fefefe, #f8f9fa);
 }
 .numbers-content {
   display: flex;
@@ -282,14 +306,22 @@ p {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: linear-gradient(135deg, #fefefe, #f8f9fa);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.1);
 }
 .numbers-content h2 {
   font-size: xx-large;
   font-family: "Comfortaa", cursive;
+  color: #2c5f3a;
+  margin-bottom: 10px;
 }
 .numbers-content p {
   font-size: x-large;
   font-family: "Nunito Sans", sans-serif;
+  color: #5dae6f;
+  font-weight: 500;
 }
 .numbers-content img,
 h2,
@@ -306,6 +338,8 @@ p {
   font-weight: 900;
   text-align: start;
   font-family: "Comfortaa", cursive;
+  color: #2c5f3a;
+  text-shadow: 0 2px 4px rgba(93, 174, 111, 0.2);
 }
 .logoss {
   width: 90vw;
@@ -313,13 +347,17 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0px 0;
+  padding: 20px 0;
   color: white;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
+  border-radius: 15px 15px 0 0;
+  margin-top: 20px;
 }
 .bottom {
   width: 100%;
   height: auto;
-  background-color: #1b1b1b;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a, #1a3d26);
+  box-shadow: 0 -4px 20px rgba(93, 174, 111, 0.3);
 }
 .sub {
   color: white;
@@ -330,11 +368,13 @@ p {
   font-size: xx-large;
   padding: 30px 10px;
   font-family: "Comfortaa", cursive;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .sub p {
   padding: 30px 10px;
-  opacity: 0.6;
+  opacity: 0.8;
   font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
 }
 .sub span input,
 button {
@@ -343,25 +383,31 @@ button {
 }
 input {
   border-radius: 5px 0 0 5px;
-  outline-color: #dd1173;
+  outline-color: #5dae6f;
   font-family: "Nunito Sans", sans-serif;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
 }
 input:focus {
   border-style: none;
 }
 .btn2 {
   border-radius: 0 5px 5px 0;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   padding: 10px;
   cursor: pointer;
   font-weight: bold;
   font-family: "Comfortaa", cursive;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.2);
 }
 .btn2:hover {
   transition: 0.3s ease;
-  background-color: black;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
   color: white;
   padding: 10px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
 }
 .footer {
   width: 100%;
@@ -370,6 +416,8 @@ input:focus {
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
+  padding: 20px 0;
 }
 .A {
   width: 50%;
@@ -385,9 +433,18 @@ input:focus {
   text-decoration: none;
   font-size: large;
   color: white;
-  opacity: 0.7;
+  opacity: 0.8;
   font-family: "Nunito Sans", sans-serif;
   text-align: center;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.A a:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .hidden {
@@ -476,24 +533,25 @@ input:focus {
 .modal-content button {
   padding: 10px;
   font-size: 16px;
-  background-color: transparent; /* Arka planı şeffaf yapıyoruz */
-  color: white; /* Yazı rengini beyaz yapıyoruz */
-  border: 2px solid white; /* Beyaz kenarlık ekliyoruz */
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
+  color: white;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
   font-family: "Comfortaa", cursive;
   margin-top: 10px;
   transition: 0.3s ease;
-  background-color: #dd1173; /* Footer butonlarına benzer renk */
-  color: white;
   font-weight: bold;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .modal-content button:hover {
   transition: 0.3s ease;
-  background-color: black;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
   color: white;
   padding: 10px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
 }
 .toggle-modal {
   margin-top: 10px;
@@ -502,7 +560,7 @@ input:focus {
 }
 
 .toggle-modal a {
-  color: #dd1173;
+  color: #5dae6f;
   cursor: pointer;
 }
 
@@ -568,11 +626,11 @@ input:focus {
     animation: slideOutRight 0.5s ease-in-out forwards;
   }
   .nvgtn {
-    width: 100%;
-    height: 100vh;
-    background-color: black;
-    position: absolute;
-  }
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
+  position: absolute;
+}
   .nvgtn ul {
     margin-top: 20px;
     display: flex;
@@ -659,7 +717,7 @@ input:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background: linear-gradient(135deg, #fefefe, #f8f9fa);
     gap: 50px;
   }
   .firstt {
@@ -670,7 +728,7 @@ input:focus {
     height: auto;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background: linear-gradient(135deg, #fefefe, #f8f9fa);
     text-align: center;
   }
   .left h2 {
@@ -687,7 +745,7 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background: linear-gradient(135deg, #fefefe, #f8f9fa);
   }
   .numbers {
     width: 100%;
@@ -697,7 +755,7 @@ input:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background: linear-gradient(135deg, #fefefe, #f8f9fa);
     gap: 50px;
   }
   .footer {
@@ -784,14 +842,14 @@ input:focus {
 
 .table-info-hero {
   display: inline-block;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   padding: 8px 20px;
   border-radius: 30px;
   font-size: 16px;
   font-weight: bold;
   margin: 15px 0;
-  box-shadow: 0 4px 8px rgba(221, 17, 115, 0.3);
+  box-shadow: 0 4px 8px rgba(93, 174, 111, 0.3);
 }
 
 .menu-hero-description {
@@ -830,7 +888,7 @@ input:focus {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   border: none;
   padding: 10px 18px;
@@ -839,12 +897,13 @@ input:focus {
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  box-shadow: 0 4px 8px rgba(221, 17, 115, 0.3);
+  box-shadow: 0 4px 8px rgba(93, 174, 111, 0.3);
 }
 
 .cart-button:hover {
-  background-color: #c10e68;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
   transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(93, 174, 111, 0.4);
 }
 
 .cart-icon {
@@ -870,8 +929,8 @@ input:focus {
 
 .back-button {
   background-color: transparent;
-  border: 2px solid #dd1173;
-  color: #dd1173;
+  border: 2px solid #5dae6f;
+  color: #5dae6f;
   padding: 10px 18px;
   border-radius: 30px;
   font-weight: 600;
@@ -880,8 +939,10 @@ input:focus {
 }
 
 .back-button:hover {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.3);
 }
 
 /* Kategori Filtreleme */
@@ -906,15 +967,15 @@ input:focus {
 }
 
 .category-btn:hover {
-  border-color: #dd1173;
-  color: #dd1173;
+  border-color: #5dae6f;
+  color: #5dae6f;
 }
 
 .category-btn.active {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
-  border-color: #dd1173;
-  box-shadow: 0 4px 8px rgba(221, 17, 115, 0.3);
+  border-color: #5dae6f;
+  box-shadow: 0 4px 8px rgba(93, 174, 111, 0.3);
 }
 
 /* Menü Öğeleri Grid */
@@ -967,13 +1028,14 @@ input:focus {
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: bold;
   z-index: 2;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .menu-item-info {
@@ -1009,11 +1071,11 @@ input:focus {
 .price {
   font-size: 18px;
   font-weight: 700;
-  color: #dd1173;
+  color: #5dae6f;
 }
 
 .add-to-cart-btn {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   border: none;
   padding: 8px 15px;
@@ -1025,11 +1087,13 @@ input:focus {
   display: flex;
   align-items: center;
   gap: 5px;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .add-to-cart-btn:hover {
-  background-color: #c10e68;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
 }
 
 .add-icon {
@@ -1157,13 +1221,14 @@ input:focus {
 
 .table-number,
 .table-info {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: bold;
   margin-left: 10px;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .table-info {
@@ -1208,7 +1273,7 @@ input:focus {
 
 .cart-item-price {
   font-weight: bold;
-  color: #dd1173;
+  color: #5dae6f;
 }
 
 .cart-item-actions {
@@ -1257,18 +1322,21 @@ input:focus {
 .place-order-btn {
   width: 100%;
   padding: 12px 0;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .place-order-btn:hover {
-  background-color: #c10e68;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
 }
 
 .place-order-btn:disabled {
@@ -1411,7 +1479,7 @@ input:focus {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(145deg, #dd1173, #350e47);
+  background: linear-gradient(145deg, #5dae6f, #2c5f3a, #1a3d26);
   padding: 20px;
 }
 
@@ -1453,8 +1521,9 @@ input:focus {
 }
 
 .form-group input:focus {
-  border-color: #dd1173;
+  border-color: #5dae6f;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(93, 174, 111, 0.1);
 }
 
 .login-error {
@@ -1469,18 +1538,21 @@ input:focus {
 .admin-login-btn {
   width: 100%;
   padding: 12px;
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .admin-login-btn:hover {
-  background-color: #c10e68;
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
 }
 
 /* Admin Dashboard Stilleri */
@@ -1519,8 +1591,8 @@ input:focus {
 
 .logout-btn {
   background-color: transparent;
-  color: #dd1173;
-  border: 1px solid #dd1173;
+  color: #5dae6f;
+  border: 1px solid #5dae6f;
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
@@ -1529,8 +1601,10 @@ input:focus {
 }
 
 .logout-btn:hover {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.3);
 }
 
 .admin-tabs {
@@ -1553,12 +1627,13 @@ input:focus {
 }
 
 .tab-btn:hover {
-  color: #dd1173;
+  color: #5dae6f;
 }
 
 .tab-btn.active {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .admin-content {
@@ -1608,8 +1683,9 @@ input:focus {
 }
 
 .filter-btn.active {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 
 .orders-list {
@@ -1676,7 +1752,7 @@ input:focus {
 
 .order-total {
   font-weight: 700;
-  color: #dd1173;
+  color: #5dae6f;
 }
 
 .order-status {
@@ -1745,7 +1821,7 @@ input:focus {
 }
 
 .total-value {
-  color: #dd1173;
+  color: #5dae6f;
 }
 
 .order-status-actions {
@@ -1827,7 +1903,7 @@ input:focus {
 
 .stat-icon {
   font-size: 24px;
-  color: #dd1173;
+  color: #5dae6f;
 }
 
 .stat-info h3 {
@@ -1887,7 +1963,7 @@ input:focus {
 }
 
 .stats-item-count {
-  color: #dd1173;
+  color: #5dae6f;
   font-weight: 600;
 }
 
@@ -2027,8 +2103,8 @@ input:focus {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #dd1173;
-  box-shadow: 0 0 0 3px rgba(221, 17, 115, 0.1);
+  border-color: #5dae6f;
+  box-shadow: 0 0 0 3px rgba(93, 174, 111, 0.1);
 }
 
 .form-group textarea {
@@ -2058,7 +2134,7 @@ input:focus {
 .form-group-checkbox input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #dd1173;
+  accent-color: #5dae6f;
 }
 
 /* Resim Yükleme Stilleri */
@@ -2083,7 +2159,7 @@ input:focus {
 }
 .file-input-label:hover {
   background-color: #eef1f5;
-  border-color: #dd1173;
+  border-color: #5dae6f;
 }
 
 .image-preview {
@@ -2124,15 +2200,17 @@ input:focus {
 }
 
 .btn-submit {
-  background-color: #dd1173;
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
   color: white;
   display: flex;
   align-items: center;
   gap: 8px;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
 }
 .btn-submit:hover {
-  background-color: #c10e68;
-  box-shadow: 0 4px 15px rgba(221, 17, 115, 0.2);
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
+  transform: translateY(-2px);
 }
 .btn-submit:disabled {
   background-color: #ccc;
@@ -2173,4 +2251,205 @@ input:focus {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* === Ürün Yönetimi Stilleri === */
+
+.product-management {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.product-management h2 {
+  font-family: "Comfortaa", cursive;
+  font-size: 22px;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.add-new-btn {
+  background: linear-gradient(135deg, #5dae6f, #2c5f3a);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(93, 174, 111, 0.3);
+}
+
+.add-new-btn:hover {
+  background: linear-gradient(135deg, #2c5f3a, #1a3d26);
+  box-shadow: 0 4px 15px rgba(93, 174, 111, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Ürün Listesi Grid Yapısı */
+.product-list {
+  display: grid;
+  /* Her sütunun en az 240px olacağı esnek bir grid oluşturur */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+/* Ürün Kartı Stilleri */
+.product-list-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-list-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.product-list-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Resmin orantısını bozmadan kartı kaplamasını sağlar */
+}
+
+.product-details {
+  padding: 15px;
+  text-align: center;
+  flex-grow: 1; /* Kart yüksekliğini eşitler */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-details h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 5px 0;
+}
+
+.product-details p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5dae6f;
+  margin: 0;
+}
+
+/* Düzenle ve Sil Butonları */
+.product-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 15px 15px 15px;
+  margin-top: auto; /* Butonları kartın en altına iter */
+}
+
+.product-actions button {
+  flex: 1; /* Butonların genişliğini eşitler */
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.product-actions button:first-child {
+  /* Düzenle Butonu */
+  background-color: #eef1f5;
+  color: #333;
+}
+.product-actions button:first-child:hover {
+  background-color: #dbe1e8;
+}
+
+.product-actions button:last-child {
+  /* Sil Butonu */
+  background-color: #ffebee;
+  color: #f44336;
+}
+.product-actions button:last-child:hover {
+  background-color: #ffcdd2;
+}
+
+/* === Kategori Dropdown Stilleri === */
+
+.form-group select {
+  -webkit-appearance: none; /* Safari ve Chrome'da varsayılan görünümü kaldır */
+  -moz-appearance: none; /* Firefox'ta varsayılan görünümü kaldır */
+  appearance: none; /* Standart varsayılan görünümü kaldır */
+
+  /* Diğer inputlarla aynı stil özelliklerini uygula */
+  width: 100%;
+  padding: 12px 40px 12px 15px; /* Sağ tarafa ok için boşluk bırak */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: "Nunito Sans", sans-serif;
+  background-color: white;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+
+  /* Sağ tarafa özel bir ok eklemek için arka plan görseli kullan */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px 12px;
+}
+
+/* Dropdown focus (odaklanma) stili */
+.form-group select:focus {
+  outline: none;
+  border-color: #5dae6f;
+  box-shadow: 0 0 0 3px rgba(93, 174, 111, 0.1);
+}
+
+/* Seçeneklerin stilleri */
+.form-group select option {
+  padding: 10px;
+}
+
+/* "Yeni Kategori Ekle" seçeneğini özelleştir */
+.form-group select option[value="addNew"] {
+  font-style: italic;
+  font-weight: 600;
+  color: #5dae6f;
+}
+
+.audio-permission-banner {
+  background-color: #fff3e0;
+  color: #ff9800;
+  padding: 15px 20px;
+  margin: 0 30px 20px 30px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ffcc80;
+}
+.audio-permission-banner p {
+  margin: 0;
+  font-weight: 500;
+}
+.audio-permission-banner button {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.audio-permission-banner button:hover {
+  background-color: #f57c00;
+}
+.contact-form {
+  height: 50px;
 }

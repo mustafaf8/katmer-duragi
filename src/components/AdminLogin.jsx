@@ -9,7 +9,7 @@ function AdminLogin({ onLogin }) {
     e.preventDefault();
 
     // Demo için basit kimlik doğrulama - gerçek uygulamada bu bir backend API isteği olurdu
-    if (username === "admin" && password === "admin123") {
+    if (username === "admin" && password === "123") {
       // Admin bilgilerini localStorage'a kaydet
       localStorage.setItem("adminLoggedIn", "true");
       localStorage.setItem("adminUsername", username);

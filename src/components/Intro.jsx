@@ -1,5 +1,5 @@
 import React from "react";
-import screen1 from "../assets/screen1.png";
+import screen1 from "../assets/screen1.webp";
 
 function Intro({ showMenuPage }) {
   return (

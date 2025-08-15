@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logogo1.png";
+import logo from "../assets/logogo1.webp";
 
 function Header({ isMenuOpen, setIsMenuOpen, showMenuPage }) {
   // Hamburger menü tıklandığında menünün durumunu değiştirir
