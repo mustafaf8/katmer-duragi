@@ -1,9 +1,9 @@
 // Resimleri import ediyoruz
-import screen5 from "../assets/screen5.png";
-import screen8 from "../assets/screen8.png";
-import screen9 from "../assets/screen9.png";
-import screen6 from "../assets/screen6.jpg";
-import screen7 from "../assets/screen7.jpg";
+import screen5 from "../../public/assets/screen5.png";
+import screen8 from "../../public/assets/screen8.png";
+import screen9 from "../../public/assets/screen9.png";
+import screen6 from "../../public/assets/screen6.jpg";
+import screen7 from "../../public/assets/screen7.jpg";
 
 function Features() {
   return (
